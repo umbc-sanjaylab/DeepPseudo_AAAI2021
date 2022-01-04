@@ -55,7 +55,7 @@ def to_one_hot(dataframe, columns):
     return one_hot_df
 
 ## Function to standardize the continuous variables
-def standardized(train_df, test_df, continuous_columns):
+def standardized(train_df1, test_df, continuous_columns):
     """Standardize the continuous columns in dataframe.
     Arguments:
         train_df: training dataframe containing covariates
@@ -64,8 +64,8 @@ def standardized(train_df, test_df, continuous_columns):
     Returns:
         A new test dataframe whose continuous columns ared standardized
     """
-    mean = train_df.loc[:, continuous_columns].mean()
-    stdev = train_df.loc[:, continuous_columns].std()
+    mean = train_df1.loc[:, continuous_columns].mean()
+    stdev = train_df1.loc[:, continuous_columns].std()
     test_df.loc[:, continuous_columns] = (test_df.loc[:, continuous_columns] - mean) / (stdev+1e-8)
     return test_df
 
@@ -103,11 +103,12 @@ def import_data(out_itr, evalTime, categorical_columns=None, continuous_columns=
     val_data=val_data.drop(columns=['train'])
     test_data=test_data.drop(columns=['train'])
     
+    train_data1=train_data.copy()
     #Standardize the contunuous columns    
     if continuous_columns is not None:
-        train_data=standardized(train_data, train_data, continuous_columns)
-        val_data=standardized(train_data, val_data, continuous_columns)
-        test_data=standardized(train_data, test_data, continuous_columns)
+        train_data=standardized(train_data1, train_data, continuous_columns)
+        val_data=standardized(train_data1, val_data, continuous_columns)
+        test_data=standardized(train_data1, test_data, continuous_columns)
     
     #Full Dataset
     dataset     = df.drop(columns=['train'])
