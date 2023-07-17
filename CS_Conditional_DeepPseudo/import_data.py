@@ -126,9 +126,9 @@ def import_data(out_itr, evalTime, categorical_columns=None, continuous_columns=
     eval_time=FloatVector(evalTime)
     #Convert the 'Python' dataframe to 'R'
     with localconverter(default_converter + pandas2ri.converter) as cv:
-        train_data_pseudo = pandas2ri.py2ri(train_data)
+        train_data_pseudo = pandas2ri.py2rpy(train_data)
     train_pseudo_data=get_conditional_pseudo_data(train_data_pseudo, eval_time) 
-    train_pseudo = pandas2ri.ri2py(train_pseudo_data)  
+    train_pseudo = pandas2ri.rpy2py(train_pseudo_data)  
     tr_data=train_pseudo.drop(['y1', 'y2'], axis = 1)
     tr_data = np.asarray(tr_data)   
     x_dim  = np.shape(tr_data)[1]
@@ -143,9 +143,9 @@ def import_data(out_itr, evalTime, categorical_columns=None, continuous_columns=
     va_label=np.asarray(val_data[['status']])
     #Convert the 'Python' dataframe to 'R'
     with localconverter(default_converter + pandas2ri.converter) as cv:
-        val_data_pseudo = pandas2ri.py2ri(val_data)       
+        val_data_pseudo = pandas2ri.py2rpy(val_data)       
     va_data=get_conditional_test_data(val_data_pseudo, eval_time) 
-    va_data = pandas2ri.ri2py(va_data) 
+    va_data = pandas2ri.rpy2py(va_data) 
     va_data = np.asarray(va_data)    
  
 
@@ -155,9 +155,9 @@ def import_data(out_itr, evalTime, categorical_columns=None, continuous_columns=
     te_label=np.asarray(test_data[['status']])
     #Convert the 'Python' dataframe to 'R'
     with localconverter(default_converter + pandas2ri.converter) as cv:
-        test_data_pseudo = pandas2ri.py2ri(test_data)        
+        test_data_pseudo = pandas2ri.py2rpy(test_data)        
     te_data=get_conditional_test_data(test_data_pseudo, eval_time) 
-    te_data = pandas2ri.ri2py(te_data)
+    te_data = pandas2ri.rpy2py(te_data)
     te_data = np.asarray(te_data)     
     
       
