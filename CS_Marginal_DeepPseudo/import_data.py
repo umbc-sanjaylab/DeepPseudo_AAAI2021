@@ -120,7 +120,7 @@ def import_data(out_itr, evalTime, categorical_columns=None, continuous_columns=
     eval_time=FloatVector(evalTime)
     #Convert the 'Python' dataframe to 'R'
     with localconverter(default_converter + pandas2ri.converter) as cv:
-        train_data_pseudo = pandas2ri.py2ri(train_data)
+        train_data_pseudo = pandas2ri.py2rpy(train_data)
     train_pseudo=pseudoFunction(train_data_pseudo, eval_time)  
     y_train=np.reshape(train_pseudo, [-1, num_Event, len(evalTime)])
 
@@ -133,7 +133,7 @@ def import_data(out_itr, evalTime, categorical_columns=None, continuous_columns=
     va_label=np.asarray(val_data[['status']])
     #Convert the 'Python' dataframe to 'R'
     with localconverter(default_converter + pandas2ri.converter) as cv:
-        val_data_pseudo = pandas2ri.py2ri(val_data)
+        val_data_pseudo = pandas2ri.py2rpy(val_data)
     val_pseudo=pseudoFunction(val_data_pseudo, eval_time)  
     y_val=np.reshape(val_pseudo, [-1, num_Event, len(evalTime)])
 
@@ -147,7 +147,7 @@ def import_data(out_itr, evalTime, categorical_columns=None, continuous_columns=
     te_label=np.asarray(test_data[['status']])
     #Convert the 'Python' dataframe to 'R'
     with localconverter(default_converter + pandas2ri.converter) as cv:
-        test_data_pseudo = pandas2ri.py2ri(test_data)
+        test_data_pseudo = pandas2ri.py2rpy(test_data)
     test_pseudo=pseudoFunction(test_data_pseudo, eval_time)  
     y_test=np.reshape(test_pseudo, [-1, num_Event, len(evalTime)])
        
